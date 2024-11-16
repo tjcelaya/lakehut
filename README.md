@@ -2,6 +2,13 @@
 
 Note: version used is 2.10.3 (stable as of writing).
 
+
+## pending:
+
+ - [ ] [Using custom images](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#using-custom-images)
+ - [ ] `requirements.txt` (for the above)
+ - [ ] `Makefile`
+
 ## Setup
 
 ```bash
@@ -31,9 +38,3 @@ docker compose up
 ```bash
 docker compose down --volumes --remove-orphans --rmi all
 ```
-
-## pending:
-
-[Using custom images](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#using-custom-images)
-`requirements.txt`
-
