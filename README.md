@@ -27,7 +27,7 @@ docker compose up
 
 ## Access
 
- - web: `open http://localhost:8080`
+ - web: [localhost:8080](http://localhost:8080)
     - default login: `airflow`:`airflow`
  - cli: `./airflow.sh info`
     - see: [wrapper](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#running-the-cli-commands)
