@@ -1,4 +1,12 @@
-all: clean build
+
+DC_ARGS= -p dataw \
+	-f docker-compose-common.yml \
+	-f docker-compose-airflow.yml \
+	-f docker-compose-spark.yml \
+	-f docker-compose-superset.yml
+
+all:
+	@LC_ALL=C $(MAKE) -pRrq -f $(firstword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/(^|\n)# Files(\n|$$)/,/(^|\n)# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | grep -E -v -e '^[^[:alnum:]]' -e '^$@$$'
 
 # go
 .PHONY: clean
@@ -7,15 +15,17 @@ all: clean build
 
 clean:
 	docker compose \
-		-f docker-compose-airflow.yml \
-		-f docker-compose-minio.yml \
-		-f docker-compose-spark.yml \
+		$(DC_ARGS) \
 		down \
 			--remove-orphans \
 			--volumes \
-			--rmi local
+
+		rm -rf logs/* tmp/*
+
+# --rmi local \
 
 init:
+# postgres handles init using /docker-entrypoint-initdb.d
 	docker compose \
 		-f docker-compose-airflow.yml \
 		up \
@@ -23,14 +33,15 @@ init:
 
 ps:
 	docker compose \
-		-f docker-compose-airflow.yml \
-		-f docker-compose-minio.yml \
-		-f docker-compose-spark.yml \
+		$(DC_ARGS) \
 		ps -a
 
 up:
 	docker compose \
-		-f docker-compose-airflow.yml \
-		-f docker-compose-minio.yml \
-		-f docker-compose-spark.yml \
+		$(DC_ARGS) \
 		up
+
+# meta
+.PHONY: list
+.PHONY: restart
+restart: clean init up
