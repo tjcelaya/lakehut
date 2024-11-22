@@ -40,6 +40,19 @@ make up
 - spark
   - web: master: [http://localhost:8888]
   - cli:
+- superset
+  - web: [http://localhost:8088]
+  - sample data setup:
+    - add connection to `postgres:5432`
+      - creds `superset:superset`
+      - database `superset`
+      - advanced >
+        - SQL Lab: enable settings
+        - Security: Allow uploads: `public,superset`
+    - upload `vendor/apache-superset/examples-data/tutorial_flights.csv`
+      - File: obvious
+      - File settings: Columns to be parsed as date: `Travel Date`
+      - Columns: all
 
 ## Destroy
 
