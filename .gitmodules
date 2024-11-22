@@ -1,3 +1,7 @@
 [submodule "vendor/apache/superset"]
 	path = vendor/apache/superset
 	url = https://github.com/apache/superset
+
+[submodule "vendor/apache-superset/examples-data"]
+	path = vendor/apache-superset/examples-data
+	url = https://github.com/apache-superset/examples-data
