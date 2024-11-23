@@ -27,9 +27,10 @@ clean:
 init:
 # postgres handles init using /docker-entrypoint-initdb.d
 	docker compose \
-		-f docker-compose-airflow.yml \
+		$(DC_ARGS) \
 		up \
-			airflow-init
+			airflow-init \
+			superset-init
 
 ps:
 	docker compose \

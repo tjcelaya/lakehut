@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    expose:
+      - 5432:5432
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  redis:
+    # Redis is limited to 7.2-bookworm due to licencing change
+    # https://redis.io/blog/redis-adopts-dual-source-available-licensing/
+    image: redis:7.2-bookworm
+    expose:
+      - 6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 50
+      start_period: 30s
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+
+  minio:
+    image: quay.io/minio/minio
+    ports:
+      - "9000:9000" # API access
+      - "9001:9001" # Console access
+    volumes:
+      - ./data:/data
+    environment:
+      # defaults for reference
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --address ":9000" --console-address ":9001"
+
+volumes:
+  postgres-db-volume:
+    external: false
+  redis:
+    external: false
+
+
+# REPEATED
+x-env-file-common:
+  &env-file-common
+  env_file:
+    - path: ".env"
+      required: true

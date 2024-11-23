@@ -1,0 +1,54 @@
+x-superset-common: &superset-common
+  image: "apachesuperset.docker.scarf.sh/apache/superset:${TAG:-latest-dev}"
+  environment:
+    SUPERSET_SECRET_KEY: supersetsecretkey
+    SUPERSET__SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://superset:superset@postgres:5432/superset
+    SUPERSET_LOAD_EXAMPLES: 'yes'
+
+  env_file:
+    - path: .env
+      required: true
+  depends_on:
+    - postgres
+    - redis
+  volumes:
+    # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
+    - ./vendor/apache/superset/docker:/app/docker
+    - superset-home:/app/superset_home
+  user: "root"
+  restart: unless-stopped
+
+volumes:
+  superset-home:
+    external: false
+
+services:
+  superset:
+    <<: *superset-common
+    command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
+    ports:
+      - 8088:8088
+
+  superset-init:
+    <<: *superset-common
+    command: ["/app/docker/docker-init.sh"]
+    restart: no # reset to default
+    healthcheck:
+      disable: true
+
+  superset-worker:
+    <<: *superset-common
+    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "celery -A superset.tasks.celery_app:app inspect ping -d celery@$$HOSTNAME",
+        ]
+
+  superset-worker-beat:
+    <<: *superset-common
+    command: ["/app/docker/docker-bootstrap.sh", "beat"]
+    healthcheck:
+      disable: true
+
