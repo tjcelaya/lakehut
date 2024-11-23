@@ -55,4 +55,5 @@ services:
         required: true
     command: start-notebook.py --IdentityProvider.token=''
     volumes:
-      - ./notebooks:/home/jovyan/work
+      - ./notebooks:/home/jovyan/work/notebooks
+      - ./vendor/jupyter/notebook/docs/source/examples:/home/jovyan/work/examples

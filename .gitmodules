@@ -5,3 +5,6 @@
 [submodule "vendor/apache-superset/examples-data"]
 	path = vendor/apache-superset/examples-data
 	url = https://github.com/apache-superset/examples-data
+[submodule "vendor/jupyter/notebook"]
+	path = vendor/jupyter/notebook
+	url = https://github.com/jupyter/notebook.git
