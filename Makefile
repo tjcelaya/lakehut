@@ -42,6 +42,11 @@ up:
 		$(DC_ARGS) \
 		up
 
+notebook:
+	docker compose \
+		$(DC_ARGS) \
+		up jupyter
+
 # meta
 .PHONY: list
 .PHONY: restart

@@ -43,8 +43,16 @@ services:
       # - 4040:4040     # app UI        (resets?)
 
   jupyter:
-    image: jupyter/pyspark-notebook
+    image: quay.io/jupyter/pyspark-notebook
     ports:
       - "8888:8888"
+    user: root
+    environment:
+      CHOWN_HOME: 'yes'
+      CHOWN_HOME_OPTS: '-R'
+    env_file:
+      - path: ".env"
+        required: true
+    command: start-notebook.py --IdentityProvider.token=''
     volumes:
       - ./notebooks:/home/jovyan/work
