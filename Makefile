@@ -45,7 +45,7 @@ up:
 notebook:
 	docker compose \
 		$(DC_ARGS) \
-		up jupyter
+		up postgres redis minio jupyter
 
 # meta
 .PHONY: list
