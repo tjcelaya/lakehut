@@ -25,7 +25,7 @@ services:
       <<: *env-bitnami-spark-common
 
     ports:
-      - 8888:8080     # master UI:      host: 8888
+      - 8880:8080     # master UI:      host: 8880
       - 18080:18080   # history UI      (resets?)
       - 7077:7077     # master connect  (resets?)
       - 6066:6066     # master REST     (resets?)
@@ -41,3 +41,10 @@ services:
     ports:
       - 8081:8081     # worker UI
       # - 4040:4040     # app UI        (resets?)
+
+  jupyter:
+    image: jupyter/pyspark-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work

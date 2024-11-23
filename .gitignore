@@ -3,4 +3,5 @@
 # dags/
 data/
 logs/
+notebooks/
 # plugins/

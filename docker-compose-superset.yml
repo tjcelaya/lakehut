@@ -30,12 +30,37 @@ services:
       - 8088:8088
 
   superset-init:
-    <<: *superset-common
-    command: ["/app/docker/docker-init.sh"]
-    restart: no # reset to default
+    image: "apachesuperset.docker.scarf.sh/apache/superset:${TAG:-latest-dev}"
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        if [ -f /opt/dataw/tmp/superset-init ]; then
+          echo "superset-init already succeeded"
+          exit 0
+        fi
+
+        exec /app/docker/docker-init.sh
+
+        if [ -f /opt/dataw/tmp/superset-init ]; then
+
     healthcheck:
       disable: true
-
+    environment:
+      SUPERSET_SECRET_KEY: supersetsecretkey
+      SUPERSET__SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://superset:superset@postgres:5432/superset
+      SUPERSET_LOAD_EXAMPLES: 'yes'
+    env_file:
+      - path: .env
+        required: true
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
+      - ./vendor/apache/superset/docker:/app/docker
+      - superset-home:/app/superset_home
+    user: "root"
   superset-worker:
     <<: *superset-common
     command: ["/app/docker/docker-bootstrap.sh", "worker"]
