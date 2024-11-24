@@ -51,6 +51,13 @@ services:
       - path: ".env"
         required: true
     command: start-notebook.py --IdentityProvider.token=''
+    depends_on:
+      minio:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     volumes:
       - ./notebooks:/home/jovyan/work/notebooks
       - ./vendor/jupyter/notebook/docs/source/examples:/home/jovyan/work/examples

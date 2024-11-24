@@ -1,6 +1,7 @@
 
 DC_ARGS= -p lakehut \
 	-f docker-compose-common.yml \
+	-f docker-compose-admin.yml \
 	-f docker-compose-airflow.yml \
 	-f docker-compose-spark.yml \
 	-f docker-compose-superset.yml \
