@@ -35,14 +35,14 @@ services:
     command:
       - -c
       - |
-        if [ -f /opt/dataw/tmp/superset-init ]; then
+        if [ -f /opt/lakehut/tmp/superset-init ]; then
           echo "superset-init already succeeded"
           exit 0
         fi
 
         exec /app/docker/docker-init.sh
 
-        if [ -f /opt/dataw/tmp/superset-init ]; then
+        if [ -f /opt/lakehut/tmp/superset-init ]; then
 
     healthcheck:
       disable: true

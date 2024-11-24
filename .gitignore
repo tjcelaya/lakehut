@@ -1,8 +1,23 @@
+# dev
+.vscode
+
 .env
+
+# minio
+
+data/
+
+# common
+
+tmp/
+
+# jupyter
+
+notebooks/
+
+# airflow
+
 # config/
 # dags/
-data/
 logs/
-notebooks/
 # plugins/
-tmp/

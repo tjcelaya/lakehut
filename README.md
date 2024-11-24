@@ -17,8 +17,10 @@ Note: versions - if given - are generally just stable or latest used as of writi
 
   - make:
     - Windows users: WSL
+  - git: only required for Superset and Jupyter Notebook examples
   - docker
     - [Docker Desktop](https://www.docker.com/products/docker-desktop/) is recommended but not required
+    - `systemctl --user start docker-desktop`
 
 ## Setup
 
@@ -28,6 +30,12 @@ make init
 ```
 
 should exit 0
+
+If you plan to use Superset you must also run:
+
+```bash
+git submodule update --init --recursive
+```
 
 ## Run
 
@@ -54,6 +62,7 @@ make notebook
 
 - superset
   - web: <http://localhost:8088>
+    - default login: `admin`:``admin`
   - sample data setup:
     - add connection:
       - host: `postgres:5432`

@@ -1,5 +1,5 @@
 
-DC_ARGS= -p dataw \
+DC_ARGS= -p lakehut \
 	-f docker-compose-common.yml \
 	-f docker-compose-airflow.yml \
 	-f docker-compose-spark.yml \

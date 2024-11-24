@@ -64,7 +64,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
-    - ${AIRFLOW_PROJ_DIR:-.}/tmp:/opt/dataw/tmp
+    - ${AIRFLOW_PROJ_DIR:-.}/tmp:/opt/lakehut/tmp
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -152,7 +152,7 @@ services:
     command:
       - -c
       - |
-        if [ -f /opt/dataw/tmp/airflow-init ]; then
+        if [ -f /opt/lakehut/tmp/airflow-init ]; then
           echo "airflow-init already succeeded"
           exit 0
         fi
@@ -203,7 +203,7 @@ services:
         chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
         exec /entrypoint airflow version
 
-        touch /opt/dataw/tmp/airflow-init
+        touch /opt/lakehut/tmp/airflow-init
     # yamllint enable rule:line-length
     environment:
       <<: *airflow-common-env
