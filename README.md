@@ -1,15 +1,24 @@
-# Airflow single-node setup using Docker compose
+# lakehut
 
-Note: versions used as of writing
+Suite of "big data" tools featuring:
+  - Spark: transforms, query, general data tool
+  - Airflow: orchestration, triggering jobs, managing spark and other services
+  - Jupyter Notebook: interactive environment
+  - Superset: visualization
 
-- airflow: 2.10.3
-- minio:
+With support from:
+  - PostgreSQL: SQL database for Airflow metadata and general structured data storage
+  - Redis: KV database for locking/coordination, streaming, and general unstructured storage
+  - MinIO: object store for lakehouse, object, and unstructured storage
 
-## pending:
+## Pre-requisites
 
-- [ ] [Using custom images](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#using-custom-images)
-- [ ] `requirements.txt` (for the above)
-- [x] `Makefile`
+Note: versions - if given - are generally just stable or latest used as of writing.
+
+  - make:
+    - Windows users: WSL
+  - docker
+    - [Docker Desktop](https://www.docker.com/products/docker-desktop/) is recommended but not required
 
 ## Setup
 
@@ -26,27 +35,31 @@ should exit 0
 make up
 ```
 
+## Notebook
+
+Note: currently only starts Jupyter Notebook and common data services (i.e. PostgreSQL, Redis, MinIO).
+
+```bash
+make notebook
+```
+
 ## Access
 
-- airflow
-  - web: [http://localhost:8080]
-    - default login: `airflow`:`airflow`
-  - cli: `./airflow.sh info`
-    - see: [wrapper](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#running-the-cli-commands)
-    - also try: `./airflow.sh` with `bash` or `python`
 - minio
-  - web: [http://localhost:9001]
+  - web: <http://localhost:9001>
     - default login: `minioadmin`:`minioadmin`
-- spark
-  - web: master: [http://localhost:8888]
-  - cli:
+
+- jupyter
+  - web: <http://localhost:8888>
+
 - superset
-  - web: [http://localhost:8088]
+  - web: <http://localhost:8088>
   - sample data setup:
-    - add connection to `postgres:5432`
-      - creds `superset:superset`
-      - database `superset`
-      - advanced >
+    - add connection:
+      - host: `postgres:5432`
+      - creds: `superset:superset`
+      - database: `superset`
+      - Advanced >
         - SQL Lab: enable settings
         - Security: Allow uploads: `public,superset`
     - upload `vendor/apache-superset/examples-data/tutorial_flights.csv`
@@ -54,8 +67,24 @@ make up
       - File settings: Columns to be parsed as date: `Travel Date`
       - Columns: all
 
-## Destroy
+- airflow
+  - web: <http://localhost:8080>
+    - default login: `airflow`:`airflow`
+  - cli: `./airflow.sh info`
+    - see: [wrapper](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#running-the-cli-commands)
+    - also try: `./airflow.sh` with `bash` or `python`
+
+- spark
+  - web: master: <http://localhost:8888>
+  - cli:
+
+## Clean up
 
 ```bash
 make clean
 ```
+
+## Pending
+
+- [ ] [Using custom images](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#using-custom-images)
+- [ ] `requirements.txt` (for the above)
