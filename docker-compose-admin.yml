@@ -1,0 +1,13 @@
+services:
+  # pgadmin:
+  #   depends_on:
+  #     redis:
+  #       condition: service_healthy
+
+  redisinsight:
+    image: redis/redisinsight
+    ports:
+      - 5540:5540
+    depends_on:
+      redis:
+        condition: service_healthy

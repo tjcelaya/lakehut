@@ -13,8 +13,6 @@ x-env-bitnami-spark-common:
   SPARK_MASTER_PORT: 7077
   PYSPARK_PYTHON: "/opt/bitnami/python/bin/python3"
 
-
-
 services:
   spark-master:
     image: bitnami/spark
@@ -43,7 +41,8 @@ services:
       # - 4040:4040     # app UI        (resets?)
 
   jupyter:
-    image: quay.io/jupyter/pyspark-notebook
+    image: tjcelaya/lakehut-notebook
+    build: build/jupyter
     ports:
       - "8888:8888"
     user: root
@@ -53,10 +52,6 @@ services:
     command: start-notebook.py --IdentityProvider.token=''
     depends_on:
       minio:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     volumes:
       - ./notebooks:/home/jovyan/work/notebooks
