@@ -53,14 +53,21 @@ make notebook
 
 ## Access
 
-- minio
+- MinIO
   - web: <http://localhost:9001>
     - default login: `minioadmin`:`minioadmin`
+- pgAdmin
+  - web: <http://localhost:8032>
+    - default login: `postgres@postgres.postgres`:`postgres`
+- Redis Insight
+  - web: <http://localhost:8032>
+    - default login: `postgres@postgres.postgres`:`postgres`
 
-- jupyter
+- Jupyter Notebook (with PySpark + boto3)
   - web: <http://localhost:8888>
+  - see `build/jupyter/requirements.txt` for custom dependencies
 
-- superset
+- Superset
   - web: <http://localhost:8088>
     - default login: `admin`:``admin`
   - sample data setup:
@@ -76,16 +83,15 @@ make notebook
       - File settings: Columns to be parsed as date: `Travel Date`
       - Columns: all
 
-- airflow
+- Airflow
   - web: <http://localhost:8080>
     - default login: `airflow`:`airflow`
   - cli: `./airflow.sh info`
     - see: [wrapper](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#running-the-cli-commands)
     - also try: `./airflow.sh` with `bash` or `python`
 
-- spark
+- Spark
   - web: master: <http://localhost:8888>
-  - cli:
 
 ## Clean up
 
