@@ -22,6 +22,8 @@ Note: versions - if given - are generally just stable or latest used as of writi
     - [Docker Desktop](https://www.docker.com/products/docker-desktop/) is recommended but not required
     - `systemctl --user start docker-desktop`
 
+## [Architecture](./architecture.md)
+
 ## Setup
 
 ```bash
