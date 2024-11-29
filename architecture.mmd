@@ -1,21 +1,6 @@
-```mermaid
-%%{
-  init: {
-    "theme": "base",
-    "themeVariables": {
-      "primaryColor": "#CCC",
-      "primaryBorderColor": "#000",
-      "lineColor": "#888",
-      "secondaryColor": "#006100",
-      "tertiaryColor": "#111"
-    }
-  }
-}%%
-
 graph LR
     %% TD or LR?
     web((web UI))
-    %% web[web UI]
     minio ----> web
     g_redis --> web
     g_postgres --> web
@@ -30,7 +15,7 @@ graph LR
     style redis stroke:#ff4438
 
 
-    minio[("MinIO<center><img src='https://cdn.worldvectorlogo.com/logos/minio-1.svg'; padding='1000'; height='100'; width='100'';/></center>")]
+    minio[("MinIO<center><img src='https://cdn.worldvectorlogo.com/logos/minio-1.svg'; padding='1000'; height='10'; width='100'';/></center>")]
     redis[("Redis<center><img src='https://cdn.worldvectorlogo.com/logos/redis.svg'; height='100'/></center>")]
     postgres[("PostgreSQL<center><img src='https://cdn.worldvectorlogo.com/logos/postgresql.svg'; height='100''/></center>")]
 
@@ -90,5 +75,3 @@ graph LR
     g_superset ------> trino
     jupyter --> trino
     trino <--> minio
-
-```

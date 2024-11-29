@@ -50,6 +50,7 @@ notebook:
 	docker compose \
 		$(DC_ARGS) \
 		up \
+			postgres pgadmin redisinsight \
 			jupyter
 
 # meta

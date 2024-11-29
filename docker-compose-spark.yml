@@ -16,18 +16,17 @@ x-env-bitnami-spark-common:
 services:
   spark-master:
     image: bitnami/spark
-    # image: spark
-
     environment:
       # SPARK_MODE: master (default)
       <<: *env-bitnami-spark-common
-
     ports:
       - 8880:8080     # master UI:      host: 8880
       - 18080:18080   # history UI      (resets?)
       - 7077:7077     # master connect  (resets?)
       - 6066:6066     # master REST     (resets?)
       # - 4040:4040     # app UI        (resets?)
+    volumes:
+      - ./build/spark/spark.conf:/usr/local/spark/conf/spark-defaults.conf/spark.conf
 
   spark-worker:
     image: bitnami/spark
@@ -35,10 +34,11 @@ services:
     environment:
       <<: *env-bitnami-spark-common
       SPARK_MODE: worker
-
     ports:
       - 8081:8081     # worker UI
       # - 4040:4040     # app UI        (resets?)
+    volumes:
+      - ./build/spark/spark.conf:/usr/local/spark/conf/spark-defaults.conf/spark.conf
 
   jupyter:
     image: tjcelaya/lakehut-notebook
@@ -51,8 +51,12 @@ services:
         required: true
     command: start-notebook.py --IdentityProvider.token=''
     depends_on:
+      postgres:
+        condition: service_healthy
       minio:
         condition: service_healthy
     volumes:
       - ./notebooks:/home/jovyan/work/notebooks
+
+      - ./build/spark/spark.conf:/usr/local/spark/conf/spark-defaults.conf/spark.conf
       - ./vendor/jupyter/notebook/docs/source/examples:/home/jovyan/work/examples
