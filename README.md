@@ -1,4 +1,4 @@
-# lakehut
+# lakehut 🚣🏠
 
 Suite of "big data" tools featuring:
   - Dagster: declarative data/job orchestration for loading, transferring, and cleaning up data either directly or by triggering Spark, Trino, etc.
