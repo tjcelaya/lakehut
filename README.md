@@ -1,10 +1,12 @@
 # lakehut
 
 Suite of "big data" tools featuring:
-  - Spark: transforms, query, general data tool
-  - Airflow: orchestration, triggering jobs, managing spark and other services
-  - Jupyter Notebook: interactive environment
-  - Superset: visualization
+  - Dagster: declarative data/job orchestration for loading, transferring, and cleaning up data either directly or by triggering Spark, Trino, etc.
+  - **DEPRECATED**: Airflow: similar to Dagster. More widely used but also more cumbersome.
+  - Jupyter Notebook: interactive code environment using Python and optionally other languages and toolkits
+  - Trino: SQL query engine that can work across multiple storage types simultaneously
+  - Spark: general purpose data analytics tool using Python/Scala/Java that also supports streaming
+  - Superset: visualization as well as dynamic querying, filtering, and aggregation
 
 With support from:
   - PostgreSQL: SQL database for Airflow metadata and general structured data storage
@@ -20,7 +22,7 @@ Note: versions - if given - are generally just stable or latest used as of writi
   - git: only required for Superset and Jupyter Notebook examples
   - docker
     - [Docker Desktop](https://www.docker.com/products/docker-desktop/) is recommended but not required
-    - `systemctl --user start docker-desktop`
+    - For non-Windows if you don't care about the UI: `systemctl --user start docker-desktop`
 
 ## [Architecture](./architecture.md)
 
@@ -61,6 +63,7 @@ make notebook
 - pgAdmin
   - web: <http://localhost:8032>
     - default login: `postgres@postgres.postgres`:`postgres`
+
 - Redis Insight
   - web: <http://localhost:8032>
     - default login: `postgres@postgres.postgres`:`postgres`
@@ -97,11 +100,15 @@ make notebook
 
 ## Clean up
 
+**WARNING**: Deletes everything that isn't a volume mounted from the host!
+
 ```bash
 make clean
 ```
 
 ## Pending
 
-- [ ] [Using custom images](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#using-custom-images)
-- [ ] `requirements.txt` (for the above)
+- Airflow
+  - [ ] [Using custom images](https://airflow.apache.org/docs/apache-airflow/2.10.3/howto/docker-compose/index.html#using-custom-images)
+  - [ ] `requirements.txt` (for the above)
+- Dagster instead of Airflow? [Dagster on Docker](https://github.com/dagster-io/dagster/tree/1.9.3/examples/deploy_docker)
