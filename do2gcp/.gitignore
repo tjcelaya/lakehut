@@ -1,0 +1,10 @@
+# local terraform state & secrets
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate*
+terraform/terraform.tfvars
+
+# real rclone config (example is committed instead)
+sync/rclone.conf
+
+*.log

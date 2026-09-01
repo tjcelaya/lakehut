@@ -1,0 +1,17 @@
+# Copy to rclone.conf (gitignored) and set the Spaces endpoint for your region.
+# No secrets live in this file:
+#   [do]  reads AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY  (your Spaces key/secret)
+#   [gcs] uses Application Default Credentials
+#         (gcloud auth application-default login, or GOOGLE_APPLICATION_CREDENTIALS)
+
+[do]
+type = s3
+provider = DigitalOcean
+env_auth = true
+endpoint = nyc3.digitaloceanspaces.com
+acl = private
+
+[gcs]
+type = google cloud storage
+env_auth = true
+bucket_policy_only = true

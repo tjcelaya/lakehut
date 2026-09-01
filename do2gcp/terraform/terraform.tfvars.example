@@ -1,0 +1,11 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored.
+
+project_id = "my-gcp-project"
+location   = "us-central1"
+
+# DO Spaces bucket -> GCS bucket, 1:1 per tier. Same names unless taken in GCS.
+buckets = {
+  "myproj-bronze" = "myproj-bronze"
+  "myproj-silver" = "myproj-silver"
+  "myproj-gold"   = "myproj-gold"
+}
